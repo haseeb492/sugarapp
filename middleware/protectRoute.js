@@ -27,10 +27,6 @@ export const authMiddleware = async (req, res, next) => {
       return res.status(401).json({ error: "User not found or invalid token" });
     }
 
-    if (!user.accessTokenStatus) {
-      return res.status(401).json({ error: "Token has expired" });
-    }
-
     req.user = {
       _id: user._id,
       name: user.name,
