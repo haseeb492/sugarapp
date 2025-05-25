@@ -4,6 +4,6 @@ import { getPredictedSugar } from "../controllers/sugarController.js";
 
 const router = express.Router();
 
-router.get("/predict-sugar", authMiddleware, getPredictedSugar);
+router.post("/predict-sugar", authMiddleware, getPredictedSugar);
 
 export default router;
