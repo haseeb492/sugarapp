@@ -11,13 +11,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "@tensorflow/tfjs-tflite": "^0.0.1-alpha.10",
+    "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "bcrypt": "^5.1.1",
     "mongoose": "^8.12.1",
-    "mqtt": "^5.10.3"
+    "mqtt": "^5.10.3",
+    "node-tflite": "^0.0.2",
+    "tfjs-tflite-node": "^0.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
