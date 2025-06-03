@@ -85,8 +85,6 @@ export const getPaginatedLogs = async (req, res) => {
     const fromDate = new Date(from);
     const toDate = new Date(to);
 
-    const user = await User.findById(userId);
-
     if (fromDate > toDate) {
       return res
         .status(400)
@@ -120,6 +118,42 @@ export const getPaginatedLogs = async (req, res) => {
     });
   } catch (error) {
     console.log("Error in getPaginatedLogs controller: ", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getInsulinDosageInsights = async (req, res) => {
+  try {
+    const { to, from } = req.query;
+
+    if (!to || !from) {
+      return res.status(400).json({ error: "To and from date is required" });
+    }
+
+    if (!isValidDate(to) || !isValidDate(from)) {
+      return res.status(400).json({ error: "Invalid date format" });
+    }
+  } catch (error) {
+    console.log(
+      "Error in getInsulinDosageInsights controller: ",
+      error.message
+    );
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getDietInsights = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log("Error in getDietInsights controller: ", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+export const getSugarLevelInsights = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log("Error in getSugarLevelInsights controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 };
