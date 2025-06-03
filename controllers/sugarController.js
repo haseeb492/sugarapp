@@ -125,6 +125,7 @@ export const getPaginatedLogs = async (req, res) => {
 export const getInsulinDosageInsights = async (req, res) => {
   try {
     const { to, from } = req.query;
+    const userId = req.user._id;
 
     if (!to || !from) {
       return res.status(400).json({ error: "To and from date is required" });
@@ -133,6 +134,31 @@ export const getInsulinDosageInsights = async (req, res) => {
     if (!isValidDate(to) || !isValidDate(from)) {
       return res.status(400).json({ error: "Invalid date format" });
     }
+
+    const fromDate = new Date(from);
+    fromDate.setUTCHours(0, 0, 0, 0);
+    const toDate = new Date(to);
+    toDate.setUTCHours(23, 59, 59, 999);
+
+    const insights = await Log.find({
+      user: userId,
+      time: {
+        $gte: fromDate,
+        $lte: toDate,
+      },
+      insolineDosage: { $gt: 0 },
+    })
+      .select("insolineDosage _id time")
+      .sort({ time: -1 });
+
+    console.log(toDate);
+    console.log(fromDate);
+
+    if (insights.length === 0) {
+      return res.status(204).json([]);
+    }
+
+    return res.status(200).json(insights);
   } catch (error) {
     console.log(
       "Error in getInsulinDosageInsights controller: ",
@@ -144,6 +170,40 @@ export const getInsulinDosageInsights = async (req, res) => {
 
 export const getDietInsights = async (req, res) => {
   try {
+    const { to, from } = req.query;
+    const userId = req.user._id;
+
+    if (!to || !from) {
+      return res.status(400).json({ error: "To and from date is required" });
+    }
+
+    if (!isValidDate(to) || !isValidDate(from)) {
+      return res.status(400).json({ error: "Invalid date format" });
+    }
+
+    const fromDate = new Date(from);
+    fromDate.setUTCHours(0, 0, 0, 0);
+    const toDate = new Date(to);
+    toDate.setUTCHours(23, 59, 59, 999);
+
+    const insights = await Log.find({
+      user: userId,
+      time: {
+        $gte: fromDate,
+        $lte: toDate,
+      },
+    })
+      .select("calories _id time meal")
+      .sort({ time: -1 });
+
+    console.log(toDate);
+    console.log(fromDate);
+
+    if (insights.length === 0) {
+      return res.status(204).json([]);
+    }
+
+    return res.status(200).json(insights);
   } catch (error) {
     console.log("Error in getDietInsights controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -152,6 +212,40 @@ export const getDietInsights = async (req, res) => {
 
 export const getSugarLevelInsights = async (req, res) => {
   try {
+    const { to, from } = req.query;
+    const userId = req.user._id;
+
+    if (!to || !from) {
+      return res.status(400).json({ error: "To and from date is required" });
+    }
+
+    if (!isValidDate(to) || !isValidDate(from)) {
+      return res.status(400).json({ error: "Invalid date format" });
+    }
+
+    const fromDate = new Date(from);
+    fromDate.setUTCHours(0, 0, 0, 0);
+    const toDate = new Date(to);
+    toDate.setUTCHours(23, 59, 59, 999);
+
+    const insights = await Log.find({
+      user: userId,
+      time: {
+        $gte: fromDate,
+        $lte: toDate,
+      },
+    })
+      .select("currentSugar predictedSugar _id time meal")
+      .sort({ time: -1 });
+
+    console.log(toDate);
+    console.log(fromDate);
+
+    if (insights.length === 0) {
+      return res.status(204).json([]);
+    }
+
+    return res.status(200).json(insights);
   } catch (error) {
     console.log("Error in getSugarLevelInsights controller: ", error.message);
     res.status(500).json({ error: "Internal server error" });
