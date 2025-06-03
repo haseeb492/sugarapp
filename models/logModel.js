@@ -31,6 +31,10 @@ const logSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    meal: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
