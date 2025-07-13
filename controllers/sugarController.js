@@ -20,12 +20,31 @@ export const getPredictedSugar = async (req, res) => {
     for (const item of calorieData.items) {
       totalCalories += item.calories;
     }
+    let totalCarbs = 0;
+    for (const item of calorieData.items) {
+      totalCarbs += item.carbohydrates_total_g;
+    }
+    let totalProtien = 0;
+    for (const item of calorieData.items) {
+      totalProtien += item.protein_g;
+    }
+    let totalFat = 0;
+    for (const item of calorieData.items) {
+      totalFat += item.fat_total_g;
+    }
+    let totalFibers = 0;
+    for (const item of calorieData.items) {
+      totalFibers += item.fiber_g;
+    }
 
     console.log(totalCalories);
     const predictedSugar = await predictSugar(
-      totalCalories,
       currentSugar,
-      insulineDosage
+      totalCalories,
+      totalCarbs,
+      totalProtien,
+      totalFat,
+      totalFibers
     );
     const currentTime = new Date();
     const today = getTodayDate();

@@ -25,6 +25,7 @@ const pushTokens = new Set(); // memory only
 
 app.post("/register-token", (req, res) => {
   const { token } = req.body;
+  console.log("Request arrived for token: ", token);
 
   if (!token) return res.status(400).json({ error: "token required" });
   if (!Expo.isExpoPushToken(token))
