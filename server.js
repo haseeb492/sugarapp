@@ -10,7 +10,6 @@ import sugarRoutes from "./routes/sugarRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-/* ───── MIDDLEWARE ───── */
 app.use(cors());
 app.use(urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,7 +18,6 @@ app.use(cookieParser());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/sugar", sugarRoutes);
 
-/* ───── EXPO PUSH CONFIG ───── */
 const expo = new Expo();
 const pushTokens = new Set(); // memory only
 
@@ -72,7 +70,7 @@ mqttClient.on("message", async (topic, buffer) => {
     to: token,
     sound: "default",
     title: "MQTT Message",
-    body: message, // RAW message
+    body: message,
     data: { raw: message },
   }));
 
